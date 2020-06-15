@@ -14,10 +14,12 @@
 <div>
   <h4>Web Speech API Test</h4>
   <input type="button" id="start" value="start"> <input type="button" id="stop" value="stop">
+  <div id="message"></div>
+  <hr>
   <div id="speech_text"></div>
+  <hr>
   <label for="speech_log">Speech Log</label>
   <textarea class="form-control" id="speech_log" rows="10"></textarea>
-  <div id="message"></div>
   <div id="debug"></div>
 </div>
 
@@ -36,7 +38,7 @@
     document.getElementById("start").disabled = true;
 
     speech.onChangeStatus = (event) => {
-      message.innerHTML = "event";
+      message.innerHTML = event;
     }
 
     speech.onSpeech = (event) => {
