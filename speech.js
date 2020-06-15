@@ -12,37 +12,37 @@ class Speech {
 
   start() {
 
-    window.SpeechRecognition = window.SpeechRecognition || webkitSpeechRecognition;
-    recognition = new webkitSpeechRecognition();
-    recognition.lang = lang;
-    recognition.interimResults = true;
-    recognition.continuous = true;
+    window.Speechthis.recognition = window.Speechthis.recognition || webkitSpeechthis.recognition;
+    this.recognition = new webkitSpeechthis.recognition();
+    this.recognition.lang = this.lang;
+    this.recognition.interimResults = true;
+    this.recognition.continuous = true;
 
-    recognition.onsoundstart = function () {
+    this.recognition.onsoundstart = function () {
       document.getElementById('message').innerHTML = "認識中...";
     };
      
-    recognition.onnomatch = function () {
+    this.recognition.onnomatch = function () {
       document.getElementById('message').innerHTML = "音声を認識できませんでした";
     };
     
-    recognition.onerror = function () {
+    this.recognition.onerror = function () {
       document.getElementById('message').innerHTML = "エラー";
     if (flag_speech == 0)
       this.start();
     };
 
-    recognition.onsoundend = function () {
+    this.recognition.onsoundend = function () {
       document.getElementById('message').innerHTML = "停止中";
       this.start();
     };
 
-    recognition.onresult = function (event) {
+    this.recognition.onresult = function (event) {
        var results = event.results;
        for (var i = event.resultIndex; i < results.length; i++) {
           if (results[i].isFinal) {
                     var result_transcript = results[i][0].transcript
-                    if (lang == 'ja-JP') {
+                    if (this.lang == 'ja-JP') {
                         result_transcript += '。';
                     }
 
@@ -61,7 +61,7 @@ class Speech {
 
         flag_speech = 0;
         document.getElementById('message').innerHTML = "待機中";
-        recognition.start();
+        this.recognition.start();
   }
 
   async stop() {
