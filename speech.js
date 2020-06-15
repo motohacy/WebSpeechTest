@@ -12,7 +12,7 @@ class Speech {
 
   start() {
 
-    window.Speechthis.recognition = window.Speechthis.recognition || webkitSpeechthis.recognition;
+    window.Speechthis.recognition = window.SpeechRecognition || webkitSpeechRecognition;
     this.recognition = new webkitSpeechthis.recognition();
     this.recognition.lang = this.lang;
     this.recognition.interimResults = true;
