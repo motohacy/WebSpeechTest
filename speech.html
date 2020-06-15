@@ -13,23 +13,10 @@
 
 <div>
   <h4>Web Speech API Test</h4>
-  <div class="form-check form-check-inline">
-    <input class="form-check-input" type="radio" name="save" id="filesystem" value="1" checked="true">
-    <label class="form-check-label" for="filesystem">filesystem(Native FileSystem API)</label>
-   　<input class="form-check-input" type="radio" name="save" id="download" value="2">
-    <label class="form-check-label" for="download">download</label>
-  </div><br>
-  <div class="form-check form-check-inline">
-    <input class="form-check-input" type="radio" name="slice" id="slice-minutes-60" value="60" checked="true">
-    <label class="form-check-label" for="slice-minutes-60">slice 60 minutes</label>
-   　<input class="form-check-input" type="radio" name="slice" id="slice-minutes-5" value="5">
-    <label class="form-check-label" for="slice-minutes-5">slice 5 minutes</label>
-    　<input class="form-check-input" type="radio" name="slice" id="slice-minutes-1" value="1">
-    <label class="form-check-label" for="slice-minutes-1">slice 1 minutes</label>
-  </div><br>
   <input type="button" id="start" value="start"> <input type="button" id="stop" value="stop">
-  <div id="result_text"></div>
-  <div id="result_log"></div>
+  <div id="speech_text"></div>
+  <label for="speech_log">Speech Log</label>
+  <textarea class="form-control" id="speech_log" rows="10"></textarea>
   <div id="message"></div>
   <div id="debug"></div>
 </div>
@@ -38,22 +25,35 @@
 <script>
  (() => {
 
-  var message = document.getElementById("message");
+  var speech_text = document.getElementById("speech_text");
+  var speech_log = document.getElementById("speech_log");
   var speech = new Speech();
 
   document.getElementById("start").onclick = function(){
 
     message.innerHTML=txt = "now recording...";
-    speech.start();
+    
     document.getElementById("start").disabled = true;
 
+    speech.onChangeStatus = (event) => {
+      message.innerHTML = "event";
+    }
+
+    speech.onSpeech = (event) => {
+      speech_text.innerHTML = event;
+    }
+
+    speech.onSpeechEnd = (event) => {
+      speech_text.innerHTML = event;
+      speech_log.value += event + "\n";
+    }
+
+    speech.start();
   }
 
   document.getElementById("stop").onclick = function(){
 
-    recorder.stopRecording();
     document.getElementById("start").disabled = false;
-
   }
 
 
