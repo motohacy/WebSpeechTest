@@ -66,6 +66,9 @@ class Speech {
 
   async stop() {
 
+    if(this.recognition != null) {
+      this.recognition.stop();
+    }
   }
  
   debug(message) {

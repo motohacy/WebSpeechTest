@@ -32,8 +32,6 @@
   var speech = new Speech();
 
   document.getElementById("start").onclick = function(){
-
-    message.innerHTML=txt = "now recording...";
     
     document.getElementById("start").disabled = true;
 
@@ -48,6 +46,7 @@
     speech.onSpeechEnd = (event) => {
       speech_text.innerHTML = event;
       speech_log.value += event + "\n";
+      speech_log.scrollTop = speech_log.scrollHeight;
     }
 
     speech.start();
@@ -55,6 +54,7 @@
 
   document.getElementById("stop").onclick = function(){
 
+    speech.stop();
     document.getElementById("start").disabled = false;
   }
 
