@@ -6,14 +6,15 @@ class Speech {
     this.lang = 'ja-JP';
 
     this.isDebug = true;
-
     this.onSpeech;
+
+    this.flag_speech = 0;
   }
 
   start() {
 
     window.SpeechRecognition = window.SpeechRecognition || webkitSpeechRecognition;
-    this.recognition = new webkitSpeechthis.recognition();
+    this.recognition = new webkitSpeechRecognition();
     this.recognition.lang = this.lang;
     this.recognition.interimResults = true;
     this.recognition.continuous = true;
@@ -28,7 +29,7 @@ class Speech {
     
     this.recognition.onerror = function () {
       document.getElementById('message').innerHTML = "エラー";
-    if (flag_speech == 0)
+    if (this.flag_speech == 0)
       this.start();
     };
 
@@ -50,16 +51,16 @@ class Speech {
                     document.getElementById('result_log').insertAdjacentHTML('beforeend', result_transcript+'\n');
                     textAreaHeightSet(document.getElementById('result_log'));
                     this.start();
-                    flag_speech = 0;
+                    this.flag_speech = 0;
                 } else {
                     var result_transcript = results[i][0].transcript;
                     document.getElementById('result_text').innerHTML = result_transcript;
-                    flag_speech = 1;
+                    this.flag_speech = 1;
                 }
             }
         }
 
-        flag_speech = 0;
+        this.flag_speech = 0;
         document.getElementById('message').innerHTML = "待機中";
         this.recognition.start();
   }
